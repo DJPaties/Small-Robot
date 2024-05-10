@@ -1,22 +1,69 @@
 import subprocess
 import time
 
-# Define GPIO pin and state
-GPIO_PIN = 27
+# Define GPIO pins
+GPIO_PINS = {"forward": [29, 27], "backward": [26, 28], "left": [29, 26], "right": [28, 27]}
+
+# Define states
 STATE_ON = "1"
 STATE_OFF = "0"
-subprocess.run(["gpio", "mode", str(GPIO_PIN), "out"])
+
+# Function to set GPIO pins states
+def set_pins(pins, state):
+    for pin in pins:
+        subprocess.run(["gpio", "write", str(pin), state])
+
+# Function to move forward
+def forward():
+    set_pins(GPIO_PINS["forward"], STATE_ON)
+    set_pins(GPIO_PINS["backward"], STATE_OFF)
+
+# Function to move backward
+def backward():
+    set_pins(GPIO_PINS["backward"], STATE_ON)
+    set_pins(GPIO_PINS["forward"], STATE_OFF)
+
+# Function to stop
+def stop():
+    for pins in GPIO_PINS.values():
+        set_pins(pins, STATE_OFF)
+
+# Function to turn left
+def left():
+    set_pins(GPIO_PINS["left"], STATE_ON)
+    set_pins(GPIO_PINS["right"], STATE_OFF)
+
+# Function to turn right
+def right():
+    set_pins(GPIO_PINS["right"], STATE_ON)
+    set_pins(GPIO_PINS["left"], STATE_OFF)
+
+# Set GPIO pins as outputs
+for pins in GPIO_PINS.values():
+    for pin in pins:
+        subprocess.run(["gpio", "mode", str(pin), "out"])
 
 try:
     while True:
-        # Turn on GPIO pin
-        subprocess.run(["gpio", "write", str(GPIO_PIN), STATE_ON])
+        # Accept user input
+        direction = input("Enter direction (F: Forward, B: Backward, L: Left, R: Right): ").upper()
+
+        # Call corresponding function based on user input
+        if direction == "F":
+            forward()
+        elif direction == "B":
+            backward()
+        elif direction == "L":
+            left()
+        elif direction == "R":
+            right()
+        else:
+            print("Invalid input. Please enter F, B, L, or R.")
+
         time.sleep(1)
-        
-        # Turn off GPIO pin
-        subprocess.run(["gpio", "write", str(GPIO_PIN), STATE_OFF])
+        stop()
         time.sleep(1)
 
 except KeyboardInterrupt:
     # Clean up
-    subprocess.run(["gpio", "write", str(GPIO_PIN), STATE_OFF])
+    stop()
