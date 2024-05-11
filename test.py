@@ -58,8 +58,8 @@ def stt(languageCode):
 
         
         except sr.UnknownValueError:
-
-            x = stt(languageCode)
+            x = 'Not Understand'
+            # x = stt(languageCode)
             return x
 
             
