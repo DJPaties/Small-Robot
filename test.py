@@ -14,26 +14,26 @@ def random_movement():
         right()
 
 # Function to listen for voice commands
-def listen_for_command():
-    recognizer = sr.Recognizer()
-    microphone = sr.Microphone()
+# def listen_for_command():
+#     recognizer = sr.Recognizer()
+#     microphone = sr.Microphone()
 
-    with microphone as source:
-        print("Listening for command...")
-        recognizer.adjust_for_ambient_noise(source)  # Adjust for ambient noise
-        audio = recognizer.listen(source)  # Listen to microphone input
+#     with microphone as source:
+#         print("Listening for command...")
+#         recognizer.adjust_for_ambient_noise(source)  # Adjust for ambient noise
+#         audio = recognizer.listen(source)  # Listen to microphone input
 
-    try:
-        print("Processing...")
-        command = recognizer.recognize_google(audio).lower()  # Use Google Speech Recognition to transcribe audio
-        print("Command:", command)
-        return command
-    except sr.UnknownValueError:
-        print("Sorry, I couldn't understand the audio.")
-        return None
-    except sr.RequestError as e:
-        print("Could not request results from Google Speech Recognition service; {0}".format(e))
-        return None
+#     try:
+#         print("Processing...")
+#         command = recognizer.recognize_google(audio).lower()  # Use Google Speech Recognition to transcribe audio
+#         print("Command:", command)
+#         return command
+#     except sr.UnknownValueError:
+#         print("Sorry, I couldn't understand the audio.")
+#         return None
+#     except sr.RequestError as e:
+#         print("Could not request results from Google Speech Recognition service; {0}".format(e))
+#         return None
     
 
 def stt(languageCode):
