@@ -76,16 +76,16 @@ try:
         # command = listen_for_command()
         command = stt("en")
 
-        # Call corresponding function based on user input
-        if command == "forward":
+        # Check various conditions based on words in the command
+        if "forward" in command:
             forward()
-        elif command == "backward":
+        elif "backward" in command:
             backward()
-        elif command == "left":
+        elif "left" in command:
             left()
-        elif command == "right":
+        elif "right" in command:
             right()
-        elif command == "random":
+        elif "random" in command:
             random_movement()
         else:
             print("Invalid command. Please try again.")
@@ -97,3 +97,4 @@ try:
 except KeyboardInterrupt:
     # Clean up
     stop()
+
