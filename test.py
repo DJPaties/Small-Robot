@@ -1,146 +1,62 @@
-# import speech_recognition as sr
+import speech_recognition as sr
+import random
+from moves import *
+# Function to perform a random movement
+def random_movement():
+    random_direction = random.randint(0, 3)
+    if random_direction == 0:
+        forward()
+    elif random_direction == 1:
+        backward()
+    elif random_direction == 2:
+        left()
+    elif random_direction == 3:
+        right()
 
-# def stt(lang_code):
-#     # Create a recognizer object
-#     r = sr.Recognizer()
+# Function to listen for voice commands
+def listen_for_command():
+    recognizer = sr.Recognizer()
+    microphone = sr.Microphone()
 
-#     # Open the microphone for capturing the speech
-#     with sr.Microphone() as source:
-#         print("Listening...")   
+    with microphone as source:
+        print("Listening for command...")
+        recognizer.adjust_for_ambient_noise(source)  # Adjust for ambient noise
+        audio = recognizer.listen(source)  # Listen to microphone input
 
-#         # Adjust the energy threshold for silence detection
-#         r.energy_threshold = 4000
-
-#         # Listen for speech and convert it to text
-#         audio = r.listen(source)
-
-#         try:
-#             text = r.recognize_google(audio, language=lang_code)
-#             print("You said:", text)
-#             return text
-
-#         except sr.UnknownValueError:
-#             # TODO: Implement the sleep function or other logic here
-#             print("Could not understand audio. No speech detected.")
-#             return None
-
-#         except sr.RequestError as e:
-#             error_message = f"Could not request results from Google Speech Recognition service; {e}"
-#             print(error_message)
-#             return error_message
-
-# # Example usage
-# lang_code = "en-US"
-# result = stt(lang_code)
-# print("Result:", result)
-
-#Text to Speech Code\
-    
-import os
-from google.cloud import texttospeech
-import pygame
-import glob
-import time
-from mutagen.mp3 import MP3
-import wave
-from concurrent.futures import ThreadPoolExecutor
-
-def tts(response_message,lang_code):
-
-    print("TTS")
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'tts.json'
-    try:        
-        
-        client = texttospeech.TextToSpeechClient()
-        print("Client created successfully.")
-    except Exception as e:
-        print("Error:", str(e))
-    print("TTS")
-    text = '<speak>'+""+response_message+""+'</speak>'
-    synthesis_input = texttospeech.SynthesisInput(ssml=text)
-    
     try:
-        if lang_code == "en-US":
-            voice = texttospeech.VoiceSelectionParams(
-            language_code=lang_code ,
-            ssml_gender=texttospeech.SsmlVoiceGender.MALE,
-        )
-            audio_config = texttospeech.AudioConfig(
-                        audio_encoding=texttospeech.AudioEncoding.MP3,
-                    )
-            response = client.synthesize_speech(
-                        input=synthesis_input, voice=voice, audio_config=audio_config,
-                    )
+        print("Processing...")
+        command = recognizer.recognize_google(audio).lower()  # Use Google Speech Recognition to transcribe audio
+        print("Command:", command)
+        return command
+    except sr.UnknownValueError:
+        print("Sorry, I couldn't understand the audio.")
+        return None
+    except sr.RequestError as e:
+        print("Could not request results from Google Speech Recognition service; {0}".format(e))
+        return None
+try:
+    while True:
+        # Accept user input via voice command
+        command = listen_for_command()
 
-
-            filename = 'audio.mp3'
-            with open(filename, 'wb') as out:
-                out.write(response.audio_content)
-            pygame.mixer.init()
-            pygame.mixer.music.load('dummy.mp3')
-            files = glob.glob('audio*.mp3')
-            for f in files:
-                try:
-                    os.remove(f)
-                except OSError as e:
-                    print("Error: %s - %s." % (e.filename, e.strerror))
-            filename = 'audio' + str(pygame.time.get_ticks()) + '.mp3'
-            with open(filename, 'wb') as out:
-                out.write(response.audio_content)
-            audio = MP3(filename)
-            
-            print("MP3 audio length is ",audio.info.length)
-            pygame.mixer.music.load(filename)
-            pygame.mixer.music.play()
-            mouth(float(audio.info.length))
-            # serialExecuter.submit(talking_scenario(audio.info.length,"talking","any"))
-            while pygame.mixer.music.get_busy():
-                time.sleep(0.15)  # Wait a second before checking again
-    
-    #if lamguage is arabic then a whole new process is written 
+        # Call corresponding function based on user input
+        if command == "forward":
+            forward()
+        elif command == "backward":
+            backward()
+        elif command == "left":
+            left()
+        elif command == "right":
+            right()
+        elif command == "random":
+            random_movement()
         else:
+            print("Invalid command. Please try again.")
 
-            name = "ar-XA-Standard-B"
-            text_input = texttospeech.SynthesisInput(text=response_message)
-            voice_params = texttospeech.VoiceSelectionParams(
-                language_code="ar-XA", name=name
-            )
-            audio_config = texttospeech.AudioConfig(audio_encoding=texttospeech.AudioEncoding.LINEAR16)
+        time.sleep(1)
+        stop()
+        time.sleep(1)
 
-            response = client.synthesize_speech(
-                input=text_input,
-                voice=voice_params,
-                audio_config=audio_config,
-            )
-            
-
-            filename = f"botConnecterarabic.wav"
-            print(filename)
-            with open(filename, "wb") as out:
-                out.write(response.audio_content)
-                print(f'Generated speech saved to "{filename}"')
-            with wave.open(filename) as mywav:
-                duration_seconds = mywav.getnframes() / mywav.getframerate()
-                print(f"Length of the WAV file: {duration_seconds:.1f} s")
-            pygame.mixer.init()
-            pygame.mixer.music.load('dummy.mp3')
-            files = glob.glob('botConnecterarabic*.mp3')
-            for f in files:
-                try:
-                    os.remove(f)
-                except OSError as e:
-                    print("Error: %s - %s." % (e.filename, e.strerror))
-            filename = 'botConnecterarabic' + str(pygame.time.get_ticks()) + '.wav'
-            with open(filename, 'wb') as out:
-                out.write(response.audio_content)
-            pygame.mixer.music.load(filename)
-            pygame.mixer.music.play() 
-            mouth(duration_seconds)
-            # serialExecuter.submit(talking_scenario(duration_seconds,"talking","any"))
-            while pygame.mixer.music.get_busy():
-                time.sleep(0.2)  # Wait a second before checking again
-    except Exception as e:
-        print("Error occured ", e)
-
-
-tts("Bye Bye Mohammad Dghaily", 'ar-LB')
+except KeyboardInterrupt:
+    # Clean up
+    stop()
