@@ -36,7 +36,7 @@ def random_movement():
 #         return None
     
 
-def stt(languageCode):
+def stt(languageCode="en-US"):
     lang_code = languageCode
     # Create a recognizer object
     r = sr.Recognizer()
@@ -67,14 +67,14 @@ def stt(languageCode):
             text="Could not request results from Google Speech Recognition service; {0}".format(e)
             print(text)
             # self.open_mic()
-        return text
+        return text.lower()
     
     
 try:
     while True:
         # Accept user input via voice command
         # command = listen_for_command()
-        command = stt("en")
+        command = stt()
 
         # Check various conditions based on words in the command
         if "forward" in command:
