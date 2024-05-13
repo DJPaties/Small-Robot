@@ -52,7 +52,7 @@ def stt(languageCode="en-US"):
         audio = r.listen(source)
 
         try:
-
+            print("analying")
             text = r.recognize_google(audio, language=lang_code)
             print("You said:", text)
 
