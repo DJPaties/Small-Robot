@@ -1,6 +1,8 @@
 import speech_recognition as sr
 import random
+import requests
 from moves import *
+import pyttsx3
 # Function to perform a random movement
 def random_movement():
     random_direction = random.randint(0, 3)
@@ -13,28 +15,10 @@ def random_movement():
     elif random_direction == 3:
         right()
 
-# Function to listen for voice commands
-# def listen_for_command():
-#     recognizer = sr.Recognizer()
-#     microphone = sr.Microphone()
 
-#     with microphone as source:
-#         print("Listening for command...")
-#         recognizer.adjust_for_ambient_noise(source)  # Adjust for ambient noise
-#         audio = recognizer.listen(source)  # Listen to microphone input
+url = "http://192.168.1.158:3000/chat"
+engine = pyttsx3.init()
 
-#     try:
-#         print("Processing...")
-#         command = recognizer.recognize_google(audio).lower()  # Use Google Speech Recognition to transcribe audio
-#         print("Command:", command)
-#         return command
-#     except sr.UnknownValueError:
-#         print("Sorry, I couldn't understand the audio.")
-#         return None
-#     except sr.RequestError as e:
-#         print("Could not request results from Google Speech Recognition service; {0}".format(e))
-#         return None
-    
 
 def stt(languageCode="en-US"):
     lang_code = languageCode
@@ -58,9 +42,9 @@ def stt(languageCode="en-US"):
 
         
         except sr.UnknownValueError:
-            x = 'Not Understand'
+            text = 'Not Understand'
             # x = stt(languageCode)
-            return x
+            return text
 
             
         except sr.RequestError as e:
@@ -75,17 +59,29 @@ try:
         # Accept user input via voice command
         # command = listen_for_command()
         command = stt()
+        payload = {
+    "success": True,
+    "message":command,
+    "language":"en"
 
+}
+        response = requests.post(url=url,json=payload)
+        response = response.json()
         # Check various conditions based on words in the command
-        if "forward" in command:
+        # Read the text
+        engine.say(response[['text']])
+
+        # Start the engine and wait until it finishes speaking
+        engine.runAndWait()
+        if "forward" == response['intent'] :
             forward()
-        elif "backward" in command:
+        elif "backward"  == response['intent']:
             backward()
-        elif "left" in command:
+        elif "left"  == response['intent']:
             left()
-        elif "right" in command:
+        elif "right" == response['intent']:
             right()
-        elif "random" in command:
+        elif "random"  == response['intent']:
             random_movement()
         else:
             print("Invalid command. Please try again.")
@@ -95,6 +91,6 @@ try:
         time.sleep(1)
 
 except KeyboardInterrupt:
-    # Clean upn
+    # Clean up
     stop()
 
