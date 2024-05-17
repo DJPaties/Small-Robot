@@ -95,6 +95,6 @@ try:
         time.sleep(1)
 
 except KeyboardInterrupt:
-    # Clean up
+    # Clean upn
     stop()
 
