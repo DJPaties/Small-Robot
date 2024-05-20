@@ -72,15 +72,15 @@ try:
         filename = text_to_speech(response['text'])
         if filename:
             play_and_delete(filename)
-        if "forward" == response['intent'] :
+        if "move_forward" == response['intent'] :
             forward()
-        elif "backward"  == response['intent']:
+        elif "move_back"  == response['intent']:
             backward()
-        elif "left"  == response['intent']:
+        elif "move_left"  == response['intent']:
             left()
-        elif "right" == response['intent']:
+        elif "move_right" == response['intent']:
             right()
-        elif "random"  == response['intent']:
+        elif "move_random"  == response['intent']:
             random_movement()
         else:
             print("Invalid command. Please try again.")
