@@ -1,8 +1,11 @@
 import speech_recognition as sr
 import random
 import requests
+import threading
+import time
 from moves import *
-from gttsvoice import play_and_delete,text_to_speech
+from gttsvoice import play_and_delete, text_to_speech
+
 # Function to perform a random movement
 def random_movement():
     random_direction = random.randint(0, 3)
@@ -15,9 +18,7 @@ def random_movement():
     elif random_direction == 3:
         right()
 
-
 url = "http://192.168.1.158:3000/chat"
-
 
 def stt(languageCode="en-US"):
     lang_code = languageCode
@@ -35,55 +36,61 @@ def stt(languageCode="en-US"):
         audio = r.listen(source)
 
         try:
-            print("analying")
+            print("Analyzing")
             text = r.recognize_google(audio, language=lang_code)
             print("You said:", text)
 
-        
         except sr.UnknownValueError:
             text = 'Not Understand'
-            # x = stt(languageCode)
             return text
 
-            
         except sr.RequestError as e:
-            text="Could not request results from Google Speech Recognition service; {0}".format(e)
+            text = "Could not request results from Google Speech Recognition service; {0}".format(e)
             print(text)
-            # self.open_mic()
+            return text
+
         return text.lower()
-    
-    
+
+def handle_tts(text):
+    filename = text_to_speech(text)
+    if filename:
+        play_and_delete(filename)
+
 try:
     while True:
         # Accept user input via voice command
-        # command = listen_for_command()
         command = stt()
         payload = {
-    "success": True,
-    "message":command,
-    "language":"en"
-
-}
-        response = requests.post(url=url,json=payload)
+            "success": True,
+            "message": command,
+            "language": "en"
+        }
+        response = requests.post(url=url, json=payload)
         response = response.json()
-        # Check various conditions based on words in the command
+
         # Read the text
         print(response)
-        filename = text_to_speech(response['text'])
-        if filename:
-            play_and_delete(filename)
-        if "move_forward" == response['intent'] :
+
+        # Create and start a thread for the TTS operation
+        tts_thread = threading.Thread(target=handle_tts, args=(response['text'],))
+        tts_thread.start()
+
+        # Check various conditions based on words in the command
+        if response['intent'] == "move_forward":
             forward()
-        elif "move_back"  == response['intent']:
+        elif response['intent'] == "move_back":
             backward()
-        elif "move_left"  == response['intent']:
+        elif response['intent'] == "move_left":
             left()
-        elif "move_right" == response['intent']:
+        elif response['intent'] == "move_right":
             right()
-        elif "move_random"  == response['intent']:
+        elif response['intent'] == "move_random":
             random_movement()
         else:
             print("Invalid command. Please try again.")
+
+        # Wait for the TTS thread to finish before stopping the robot
+        tts_thread.join()
 
         time.sleep(1)
         stop()
@@ -92,4 +99,3 @@ try:
 except KeyboardInterrupt:
     # Clean up
     stop()
-
