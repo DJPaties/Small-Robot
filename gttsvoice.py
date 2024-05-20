@@ -30,12 +30,12 @@ def play_and_delete(filename):
     except Exception as e:
         print(f"An error occurred: {e}")
 
-if __name__ == "__main__":
-    while True:
-        text = input("Enter the text you want to convert to speech (or type 'exit' to quit): ")
-        if text.lower() == 'exit':
-            print("Exiting the program.")
-            break
-        filename = text_to_speech(text)
-        if filename:
-            play_and_delete(filename)
+# if __name__ == "__main__":
+#     while True:
+#         text = input("Enter the text you want to convert to speech (or type 'exit' to quit): ")
+#         if text.lower() == 'exit':
+#             print("Exiting the program.")
+#             break
+#         filename = text_to_speech(text)
+#         if filename:
+#             play_and_delete(filename)

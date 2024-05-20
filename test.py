@@ -2,7 +2,7 @@ import speech_recognition as sr
 import random
 import requests
 from moves import *
-import pyttsx3
+from gttsvoice import play_and_delete,text_to_speech
 # Function to perform a random movement
 def random_movement():
     random_direction = random.randint(0, 3)
@@ -17,7 +17,6 @@ def random_movement():
 
 
 url = "http://192.168.1.158:3000/chat"
-engine = pyttsx3.init()
 
 
 def stt(languageCode="en-US"):
@@ -69,10 +68,9 @@ try:
         response = response.json()
         # Check various conditions based on words in the command
         # Read the text
-        engine.say(response[['text']])
-
-        # Start the engine and wait until it finishes speaking
-        engine.runAndWait()
+        filename = text_to_speech(response['text'])
+        if filename:
+            play_and_delete(filename)
         if "forward" == response['intent'] :
             forward()
         elif "backward"  == response['intent']:
