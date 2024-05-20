@@ -68,6 +68,7 @@ try:
         response = response.json()
         # Check various conditions based on words in the command
         # Read the text
+        print(response)
         filename = text_to_speech(response['text'])
         if filename:
             play_and_delete(filename)
