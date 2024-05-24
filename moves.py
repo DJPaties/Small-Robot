@@ -12,6 +12,9 @@ STATE_OFF = "0"
 def set_pins(pins, state):
     for pin in pins:
         subprocess.run(["gpio", "write", str(pin), state])
+        time.sleep(0.2)
+        subprocess.run(["gpio", "write", str(pin), STATE_OFF])
+
 
 # Function to move forward
 def forward():
