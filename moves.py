@@ -2,7 +2,7 @@ import subprocess
 import time
 
 # Define GPIO pins
-GPIO_PINS = {"forward": [29, 27], "backward": [26, 28], "left": [29, 26], "right": [28, 27]}
+GPIO_PINS = {"forward": [29, 27], "backward": [28, 26], "left": [29, 26], "right": [28, 27]}
 
 # Define states
 STATE_ON = "1"
