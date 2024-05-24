@@ -20,7 +20,7 @@ def set_pins(pins, state):
 # Function to move forward
 def forward():
     set_pins(GPIO_PINS["forward"], STATE_ON)
-    set_pins(GPIO_PINS["backward"], STATE_OFF)
+    # set_pins(GPIO_PINS["backward"], STATE_OFF)
 
 # Function to move backward
 def backward():
