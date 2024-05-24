@@ -10,10 +10,11 @@ STATE_OFF = "0"
 
 # Function to set GPIO pins states
 def set_pins(pins, state):
+    
     for pin in pins:
         subprocess.run(["gpio", "write", str(pin), state])
-        # time.sleep(0.2)
-        # subprocess.run(["gpio", "write", str(pin), STATE_OFF])
+        time.sleep(0.2)
+        subprocess.run(["gpio", "write", str(pin), STATE_OFF])
 
 
 # Function to move forward
@@ -50,22 +51,23 @@ try:
     while True:
         # Accept user input
         direction = input("Enter direction (F: Forward, B: Backward, L: Left, R: Right): ").upper()
-
-        # Call corresponding function based on user input
-        if direction == "F":
-            forward()
-        elif direction == "B":
-            backward()
-        elif direction == "L":
-            left()
-        elif direction == "R":
-            right()
-        else:
-            print("Invalid input. Please enter F, B, L, or R.")
-
-        time.sleep(1)
-        stop()
-        time.sleep(1)
+        i=0.2
+        while i < 1:
+            # Call corresponding function based on user input
+            if direction == "F":
+                forward()
+            elif direction == "B":
+                backward()
+            elif direction == "L":
+                left()
+            elif direction == "R":
+                right()
+            else:
+                print("Invalid input. Please enter F, B, L, or R.")
+            i+=0.2
+            # time.sleep(1)
+            # stop()
+            # time.sleep(1)
 
 except KeyboardInterrupt:
     # Clean up
