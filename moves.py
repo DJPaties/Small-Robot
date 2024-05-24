@@ -24,8 +24,13 @@ def forward():
 
 # Function to move backward
 def backward():
-    set_pins(GPIO_PINS["backward"], STATE_ON)
-    set_pins(GPIO_PINS["forward"], STATE_OFF)
+    local_pins = ["28,26"]
+    for pin in local_pins:
+        subprocess.run(["gpio", "write", str(pin), STATE_ON])
+        time.sleep(0.35)
+        subprocess.run(["gpio", "write", str(pin), STATE_OFF])
+    # set_pins(GPIO_PINS["backward"], STATE_ON)
+    # set_pins(GPIO_PINS["forward"], STATE_OFF)
 
 # Function to stop
 def stop():
@@ -68,7 +73,7 @@ try:
             # time.sleep(1)
             # stop()
             # time.sleep(1)
-
+        stop()
 except KeyboardInterrupt:
     # Clean up
     stop()
