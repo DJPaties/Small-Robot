@@ -13,7 +13,7 @@ def set_pins(pins, state):
     
     for pin in pins:
         subprocess.run(["gpio", "write", str(pin), state])
-        time.sleep(0.2)
+        time.sleep(0.35)
         subprocess.run(["gpio", "write", str(pin), STATE_OFF])
 
 
