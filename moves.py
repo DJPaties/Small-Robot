@@ -35,12 +35,12 @@ def stop():
 # Function to turn left
 def left():
     set_pins(GPIO_PINS["left"], STATE_ON)
-    set_pins(GPIO_PINS["right"], STATE_OFF)
+    # set_pins(GPIO_PINS["right"], STATE_OFF)
 
 # Function to turn right
 def right():
     set_pins(GPIO_PINS["right"], STATE_ON)
-    set_pins(GPIO_PINS["left"], STATE_OFF)
+    # set_pins(GPIO_PINS["left"], STATE_OFF)
 
 # Set GPIO pins as outputs
 for pins in GPIO_PINS.values():
