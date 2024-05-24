@@ -34,37 +34,49 @@ def stop():
 
 # Function to turn left
 def left():
-    set_pins(GPIO_PINS["left"], STATE_ON)
-    # set_pins(GPIO_PINS["right"], STATE_OFF)
+    local_pins = [29,26]
+    for pin in local_pins:
+        subprocess.run(["gpio", "write", str(pin), STATE_ON])
+        # time.sleep(0.35)
+        # subprocess.run(["gpio", "write", str(pin), STATE_OFF])
 
 # Function to turn right
 def right():
-    set_pins(GPIO_PINS["right"], STATE_ON)
+    local_pins = [28, 27]
+    for pin in local_pins:
+        subprocess.run(["gpio", "write", str(pin), STATE_ON])
     # set_pins(GPIO_PINS["left"], STATE_OFF)
 
 # Set GPIO pins as outputs
 for pins in GPIO_PINS.values():
     for pin in pins:
         subprocess.run(["gpio", "mode", str(pin), "out"])
-
+i = 1
 try:
     while True:
         # Accept user input
-        direction = input("Enter direction (F: Forward, B: Backward, L: Left, R: Right): ").upper()
-        i=0.2
-        while i < 1:
+        if i>=1:
+            direction = input("Enter direction (F: Forward, B: Backward, L: Left, R: Right): ").upper()
+            i=0.2
+        
             # Call corresponding function based on user input
-            if direction == "F":
+        if direction == "F":
+            while i < 1:
                 forward()
-            elif direction == "B":
+                i+=0.2
+        elif direction == "B":
+            while i < 1:
                 backward()
-            elif direction == "L":
-                left()
-            elif direction == "R":
-                right()
-            else:
-                print("Invalid input. Please enter F, B, L, or R.")
-            i+=0.2
+                i+=0.2
+        elif direction == "L":
+            left()
+            time.sleep(0.5)
+        elif direction == "R":
+            right()
+            time.sleep(0.5)
+        else:
+            print("Invalid input. Please enter F, B, L, or R.")
+            
             # time.sleep(1)
             # stop()
             # time.sleep(1)
