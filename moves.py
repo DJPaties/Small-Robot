@@ -9,7 +9,7 @@ STATE_ON = "1"
 STATE_OFF = "0"
 
 # Function to set GPIO pins states
-def set_pins(pins, state,delay):
+def set_pins(pins, state,delay=0.35):
     
     for pin in pins:
         subprocess.run(["gpio", "write", str(pin), state])
