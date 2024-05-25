@@ -15,8 +15,11 @@ def set_pins(pins, state,delay=0.35):
         subprocess.run(["gpio", "write", str(pin), state])
         time.sleep(delay)
         subprocess.run(["gpio", "write", str(pin), STATE_OFF])
+    time.sleep(0.1)
 
-
+    for pin in pins:
+        # set_pins(pins, STATE_OFF)
+        subprocess.run(["gpio", "write", str(pins), STATE_OFF])
 # Function to move forward
 def forward(delay=0.35):
     i=0.2
@@ -87,7 +90,9 @@ def random_movement():
         left()
         stop()
         print("left Done")
-        right()
+        right(
+            
+        )
         stop()
         print("right Done")
         # backward()
