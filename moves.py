@@ -55,9 +55,9 @@ i = 1
 try:
     while True:
         # Accept user input
-        if i>=1:
-            direction = input("Enter direction (F: Forward, B: Backward, L: Left, R: Right): ").upper()
-            i=0.2
+        # if i>=1:
+        direction = input("Enter direction (F: Forward, B: Backward, L: Left, R: Right): ").upper()
+        i=0.2
         
             # Call corresponding function based on user input
         if direction == "F":
