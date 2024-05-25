@@ -68,9 +68,9 @@ def random_movement():
         right(0.2)
         stop()
         print("right Done")
-        backward()
-        stop()
-        print("backward Done")
+        # backward()
+        # stop()
+        # print("backward Done")
 
     elif random_direction == 1:
         # left(0.2)
