@@ -6,17 +6,7 @@ import time
 from moves import *
 from gttsvoice import play_and_delete, text_to_speech
 
-# Function to perform a random movement
-def random_movement():
-    random_direction = random.randint(0, 3)
-    if random_direction == 0:
-        forward()
-    elif random_direction == 1:
-        backward()
-    elif random_direction == 2:
-        left()
-    elif random_direction == 3:
-        right()
+
 
 url = "http://192.168.1.158:3000/chat"
 

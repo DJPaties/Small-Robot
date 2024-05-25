@@ -1,7 +1,7 @@
 import subprocess
 import time
-
-# Define GPIO pins
+import random
+#Setting GPIO PINS for movement
 GPIO_PINS = {"forward": [29, 27], "backward": [28, 26], "left": [29, 26], "right": [28, 27]}
 
 # Define states
@@ -9,27 +9,27 @@ STATE_ON = "1"
 STATE_OFF = "0"
 
 # Function to set GPIO pins states
-def set_pins(pins, state):
+def set_pins(pins, state,delay):
     
     for pin in pins:
         subprocess.run(["gpio", "write", str(pin), state])
-        time.sleep(0.35)
+        time.sleep(delay)
         subprocess.run(["gpio", "write", str(pin), STATE_OFF])
 
 
 # Function to move forward
-def forward():
+def forward(delay=0.35):
     i=0.2
     while i < 1:
-        set_pins(GPIO_PINS["forward"], STATE_ON)
+        set_pins(GPIO_PINS["forward"], STATE_ON,delay)
         i+=0.2
     # set_pins(GPIO_PINS["backward"], STATE_OFF)
 
 # Function to move backward
-def backward():
+def backward(delay=0.35):
     i = 0.2
     while i <1:
-        set_pins(GPIO_PINS["backward"], STATE_ON)
+        set_pins(GPIO_PINS["backward"], STATE_ON,delay)
         # set_pins(GPIO_PINS["forward"], STATE_OFF)
         i+=0.2
 # Function to stop
@@ -38,20 +38,49 @@ def stop():
         set_pins(pins, STATE_OFF)
 
 # Function to turn left
-def left():
+def left(delay=0.4):
     local_pins = [29,26]
     for pin in local_pins:
         subprocess.run(["gpio", "write", str(pin), STATE_ON])
         # time.sleep(0.35)
         # subprocess.run(["gpio", "write", str(pin), STATE_OFF])
-    time.sleep(0.4)
+    time.sleep(delay)
 # Function to turn right
-def right():
+def right(delay=0.4):
     local_pins = [28, 27]
     for pin in local_pins:
         subprocess.run(["gpio", "write", str(pin), STATE_ON])
     # set_pins(GPIO_PINS["left"], STATE_OFF)
-    time.sleep(0.4)
+    time.sleep(delay)
+
+# Function to perform a random movement
+def random_movement():
+    random_direction = random.randint(0, 1)
+    print(random_direction)
+    if random_direction == 0:
+        forward()
+        stop()
+        left(0.2)
+        stop()
+        right(0.2)
+        stop()
+        backward()
+    elif random_direction == 1:
+        left(0.2)
+        stop()
+        right(0.2)
+        stop()
+        left(0.2)
+        stop()
+        right(0.2)
+    # elif random_direction == 2:
+    #     left()
+    # elif random_direction == 3:
+    #     right()
+
+
+
+
 
 # Set GPIO pins as outputs
 for pins in GPIO_PINS.values():
@@ -67,21 +96,21 @@ try:
         
             # Call corresponding function based on user input
         if direction == "F":
-                forward()
+            forward()
                 
         elif direction == "B":
-                backward()
+            backward()
 
         elif direction == "L":
             left()
         elif direction == "R":
             right()
+        elif direction == "M":
+            random_movement()
         else:
             print("Invalid input. Please enter F, B, L, or R.")
             
-            # time.sleep(1)
-            # stop()
-            # time.sleep(1)
+            
         stop()
 except KeyboardInterrupt:
     # Clean up
