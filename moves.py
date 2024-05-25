@@ -19,7 +19,7 @@ def set_pins(pins, state,delay=0.35):
 
     for pin in pins:
         # set_pins(pins, STATE_OFF)
-        subprocess.run(["gpio", "write", str(pins), STATE_OFF])
+        subprocess.run(["gpio", "write", str(pin), STATE_OFF])
 # Function to move forward
 def forward(delay=0.35):
     i=0.2
