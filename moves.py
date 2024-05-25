@@ -61,22 +61,39 @@ def random_movement():
     if random_direction == 0:
         forward()
         stop()
+        print("Forward Done")
         left(0.2)
         stop()
+        print("left Done")
         right(0.2)
         stop()
+        print("right Done")
         backward()
         stop()
+        print("backward Done")
 
     elif random_direction == 1:
+        # left(0.2)
+        # stop()
+        # right(0.2)
+        # stop()
+        # left(0.2)
+        # stop()
+        # right(0.2)
+        # stop()
+        forward()
+        stop()
+        print("Forward Done")
         left(0.2)
         stop()
+        print("left Done")
         right(0.2)
         stop()
-        left(0.2)
+        print("right Done")
+        backward()
         stop()
-        right(0.2)
-        stop()
+        print("backward Done")
+
 
     # elif random_direction == 2:
     #     left()
@@ -102,10 +119,8 @@ try:
             # Call corresponding function based on user input
         if direction == "F":
             forward()
-                
         elif direction == "B":
             backward()
-
         elif direction == "L":
             left()
         elif direction == "R":
@@ -114,6 +129,7 @@ try:
             random_movement()
         else:
             print("Invalid input. Please enter F, B, L, or R.")
+            stop()
             
             
         stop()
