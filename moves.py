@@ -46,30 +46,32 @@ def stop():
             subprocess.run(["gpio", "write", str(pin), STATE_OFF])
 
 # Function to perform a random movement
-def random_movement():
+def random_movement(delay=1.5):
     random_direction = random.randint(0, 1)
-    print(random_direction)
-    if random_direction == 0:
-        forward()
-        stop()
-        print("Forward Done")
-        left(0.2)
-        stop()
-        print("Left Done")
-        right(0.2)
-        stop()
-        print("Right Done")
-    elif random_direction == 1:
-        forward()
-        stop()
-        print("Forward Done")
-        left()
-        stop()
-        print("Left Done")
-        right()
-        stop()
-        print("Right Done")
-
+    i = 0
+    while i<delay: 
+        print(random_direction)
+        if random_direction == 0:
+            forward()
+            stop()
+            print("Forward Done")
+            left(0.2)
+            stop()
+            print("Left Done")
+            right(0.2)
+            stop()
+            print("Right Done")
+        elif random_direction == 1:
+            forward()
+            stop()
+            print("Forward Done")
+            left()
+            stop()
+            print("Left Done")
+            right()
+            stop()
+            print("Right Done")
+        i+=1
 # Set GPIO pins as outputs
 for pins in GPIO_PINS.values():
     for pin in pins:
