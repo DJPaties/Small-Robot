@@ -35,7 +35,8 @@ def backward(delay=0.35):
 # Function to stop
 def stop():
     for pins in GPIO_PINS.values():
-        set_pins(pins, STATE_OFF)
+        # set_pins(pins, STATE_OFF)
+        subprocess.run(["gpio", "write", str(pin), STATE_OFF])
 
 # Function to turn left
 def left(delay=0.4):
