@@ -19,12 +19,16 @@ def set_pins(pins, state, delay=0.35):
 
 # Function to move forward
 def forward(delay=0.35):
-    set_pins(GPIO_PINS["forward"], STATE_ON, delay)
-
+    i = 0.2
+    while i<1:
+        set_pins(GPIO_PINS["forward"], STATE_ON, delay)
+        i+=0.2
 # Function to move backward
 def backward(delay=0.35):
-    set_pins(GPIO_PINS["backward"], STATE_ON, delay)
-
+    i = 0.2
+    while i<1:
+        set_pins(GPIO_PINS["backward"], STATE_ON, delay)
+        i+=0.2
 # Function to turn left
 def left(delay=0.4):
     set_pins(GPIO_PINS["left"], STATE_ON, delay)
