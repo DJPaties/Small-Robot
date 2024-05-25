@@ -66,6 +66,8 @@ def random_movement():
         right(0.2)
         stop()
         backward()
+        stop()
+
     elif random_direction == 1:
         left(0.2)
         stop()
@@ -74,6 +76,8 @@ def random_movement():
         left(0.2)
         stop()
         right(0.2)
+        stop()
+
     # elif random_direction == 2:
     #     left()
     # elif random_direction == 3:
