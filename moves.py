@@ -77,21 +77,21 @@ for pins in GPIO_PINS.values():
     for pin in pins:
         subprocess.run(["gpio", "mode", str(pin), "out"])
 
-try:
-    while True:
-        direction = input("Enter direction (F: Forward, B: Backward, L: Left, R: Right, M: Random Movement): ").upper()
-        if direction == "F":
-            forward()
-        elif direction == "B":
-            backward()
-        elif direction == "L":
-            left()
-        elif direction == "R":
-            right()
-        elif direction == "M":
-            random_movement()
-        else:
-            print("Invalid input. Please enter F, B, L, R, or M.")
-        stop()
-except KeyboardInterrupt:
-    stop()
+# try:
+#     while True:
+#         direction = input("Enter direction (F: Forward, B: Backward, L: Left, R: Right, M: Random Movement): ").upper()
+#         if direction == "F":
+#             forward()
+#         elif direction == "B":
+#             backward()
+#         elif direction == "L":
+#             left()
+#         elif direction == "R":
+#             right()
+#         elif direction == "M":
+#             random_movement()
+#         else:
+#             print("Invalid input. Please enter F, B, L, R, or M.")
+#         stop()
+# except KeyboardInterrupt:
+#     stop()
