@@ -78,6 +78,7 @@ try:
             random_movement()
         else:
             print("Invalid command. Please try again.")
+            random_movement()
 
         # Wait for the TTS thread to finish before stopping the robot
         tts_thread.join()
