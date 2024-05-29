@@ -33,13 +33,17 @@ def stt(languageCode="en-US"):
 
         return text.lower()
 
-def text_to_speech(text, filename="output.mp3"):
-    tts = gTTS(text=text, lang='en')
-    tts.save(filename)
-    os.system(f"mpg321 {filename}")
+def text_to_speech(text):
+    engine = pyttsx3.init()
+    voices = engine.getProperty('voices')
+    for voice in voices:
+        if 'male' in voice.name.lower():
+            engine.setProperty('voice', voice.id)
+            break
+    engine.say(text)
+    engine.runAndWait()
 
 if __name__ == "__main__":
-    while True:
-        spoken_text = stt()
-        if spoken_text:
-            text_to_speech(spoken_text)
+    spoken_text = stt()
+    if spoken_text:
+        text_to_speech(spoken_text)
