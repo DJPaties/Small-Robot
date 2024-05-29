@@ -35,11 +35,6 @@ def stt(languageCode="en-US"):
 
 def text_to_speech(text):
     engine = pyttsx3.init()
-    voices = engine.getProperty('voices')
-    for voice in voices:
-        if 'male' in voice.name.lower():
-            engine.setProperty('voice', voice.id)
-            break
     engine.say(text)
     engine.runAndWait()
 
