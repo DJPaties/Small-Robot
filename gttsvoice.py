@@ -10,7 +10,9 @@ def text_to_speech(text, lang='en', slow=False, filename="output.mp3"):
         # Save the speech to an MP3 file
         speech.save(filename)
         print(f"Speech saved to {filename}")
-        return filename
+        audio = MP3(filename)
+        
+        return filename,audio.info.length
     except Exception as e:
         print(f"An error occurred: {e}")
         return None

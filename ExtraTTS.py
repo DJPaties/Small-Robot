@@ -5,7 +5,7 @@ from pydub.playback import play  # Importing the play function
 import glob
 import time
 from concurrent.futures import ThreadPoolExecutor
-from serialSender import mouth, talking_scenario
+# from serialSender import mouth, talking_scenario
 
 def tts(response_message, lang_code):
     print("TTS")

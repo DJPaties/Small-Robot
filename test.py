@@ -7,7 +7,7 @@ from moves import *
 from gttsvoice import play_and_delete, text_to_speech
 
 
-
+duration = 1
 url = "http://192.168.1.158:3000/chat"
 
 def stt(languageCode="en-US"):
@@ -42,7 +42,8 @@ def stt(languageCode="en-US"):
         return text.lower()
 
 def handle_tts(text):
-    filename = text_to_speech(text)
+    global duration
+    filename,duration = text_to_speech(text)
     if filename:
         play_and_delete(filename)
 
@@ -66,6 +67,7 @@ try:
         tts_thread.start()
 
         # Check various conditions based on words in the command
+        print(duration)
         if response['intent'] == "move_forward":
             forward()
         elif response['intent'] == "move_back":
@@ -75,10 +77,10 @@ try:
         elif response['intent'] == "move_right":
             right()
         elif response['intent'] == "move_random":
-            random_movement()
+            random_movement(duration)
         else:
             print("Invalid command. Please try again.")
-            random_movement()
+            random_movement(duration)
 
         # Wait for the TTS thread to finish before stopping the robot
         tts_thread.join()
