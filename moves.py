@@ -53,25 +53,48 @@ def random_movement(delay=1.5):
         print(random_direction)
         if random_direction == 0:
             forward()
+            i+=0.35
+            if i<delay:
+                stop()
+                break
             stop()
             print("Forward Done")
             left(0.2)
+            i+=0.2
+            if i<delay:
+                stop()
+                break
             stop()
             print("Left Done")
             right(0.2)
+            i+=0.2
+            if i<delay:
+                stop()
+                break
             stop()
             print("Right Done")
         elif random_direction == 1:
             forward()
+            i+=0.35
+            if i<delay:
+                stop()
+                break
             stop()
             print("Forward Done")
             left()
+            i+=0.4
+            if i<delay:
+                stop()
+                break
             stop()
             print("Left Done")
             right()
+            i+=0.4
+            if i<delay:
+                stop()
+                break
             stop()
             print("Right Done")
-        i+=1
 # Set GPIO pins as outputs
 for pins in GPIO_PINS.values():
     for pin in pins:
