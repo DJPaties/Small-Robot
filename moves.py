@@ -25,6 +25,12 @@ def forward(delay=0.35):
     while i<1:
         set_pins(GPIO_PINS["forward"], STATE_ON, delay)
         i+=0.2
+        
+def forwardOnce(delay=0.35):
+    i = 0.2
+    while i<delay:
+        set_pins(GPIO_PINS["forward"], STATE_ON, delay)
+        i+=0.2
 # Function to move backward
 def backward(delay=0.35):
     i = 0.2
@@ -52,7 +58,7 @@ def random_movement(delay=1.5):
     while i<delay: 
         print(random_direction)
         if random_direction == 0:
-            forward()
+            forwardOnce()
             i+=0.35
             if i<delay:
                 stop()
@@ -74,7 +80,7 @@ def random_movement(delay=1.5):
             stop()
             print("Right Done")
         elif random_direction == 1:
-            forward()
+            forwardOnce()
             i+=0.35
             if i<delay:
                 stop()
