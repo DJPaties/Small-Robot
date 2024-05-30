@@ -5,12 +5,13 @@ import threading
 import time
 from moves import *
 from gttsvoice import play_and_delete, text_to_speech
-
+import os
 
 duration = 1
 url = "http://192.168.1.158:3000/chat"
 
 def stt(languageCode="en-US"):
+    os.system("clear")
     lang_code = languageCode
     # Create a recognizer object
     r = sr.Recognizer()
@@ -67,7 +68,7 @@ try:
         tts_thread.start()
 
         # Check various conditions based on words in the command
-        print(duration)
+        print("DURATIONN: ",duration)
         if response['intent'] == "move_forward":
             forward()
         elif response['intent'] == "move_back":
