@@ -65,14 +65,14 @@ def random_movement(delay=1.5):
                 break
             stop()
             print("Forward Done")
-            left(0.2)
+            left()
             i+=0.2
             if i<delay:
                 stop()
                 break
             stop()
             print("Left Done")
-            right(0.2)
+            right()
             i+=0.2
             if i<delay:
                 stop()
