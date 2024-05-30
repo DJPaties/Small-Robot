@@ -60,21 +60,21 @@ def random_movement(delay=1.5):
         if random_direction == 0:
             forwardOnce()
             i+=0.35
-            if i<delay:
+            if i>delay:
                 stop()
                 break
             stop()
             print("Forward Done")
             left()
             i+=0.2
-            if i<delay:
+            if i>delay:
                 stop()
                 break
             stop()
             print("Left Done")
             right()
             i+=0.2
-            if i<delay:
+            if i>delay:
                 stop()
                 break
             stop()
@@ -82,21 +82,21 @@ def random_movement(delay=1.5):
         elif random_direction == 1:
             forwardOnce()
             i+=0.35
-            if i<delay:
+            if i>delay:
                 stop()
                 break
             stop()
             print("Forward Done")
             left()
             i+=0.4
-            if i<delay:
+            if i>delay:
                 stop()
                 break
             stop()
             print("Left Done")
             right()
             i+=0.4
-            if i<delay:
+            if i>delay:
                 stop()
                 break
             stop()
