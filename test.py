@@ -68,7 +68,7 @@ try:
         tts_thread.start()
 
         # Check various conditions based on words in the command
-        print("DURATIONN: ",duration)
+        
         if response['intent'] == "move_forward":
             forward()
         elif response['intent'] == "move_back":
@@ -78,17 +78,19 @@ try:
         elif response['intent'] == "move_right":
             right()
         elif response['intent'] == "move_random":
+            
             random_movement(duration)
         else:
             print("Invalid command. Please try again.")
+            print("DURATIONN: ",duration)
             random_movement(duration)
 
         # Wait for the TTS thread to finish before stopping the robot
         tts_thread.join()
 
-        time.sleep(1)
-        stop()
-        time.sleep(1)
+        # time.sleep(1)
+        # stop()
+        # time.sleep(1)
 
 except KeyboardInterrupt:
     # Clean up
